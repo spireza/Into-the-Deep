@@ -6,7 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Inyo-the-Deep/Scene/Main Menu  Scene/Main menu.unity
+    guid: f1d4b10ee3ac05d43ab7cb1038cfc921
+  - enabled: 1
+    path: Assets/Inyo-the-Deep/Game/openmain.unity
+    guid: 58debae8b1f15204e98be8170fec1129
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

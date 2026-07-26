@@ -1,17 +1,56 @@
 using UnityEngine;
 
-public class bodyplayer : MonoBehaviour
+public class Door : MonoBehaviour
 {
+    [Header("Door Settings")]
+    public Transform doorPivot;
+    public float openAngle = 90f;
+    public float openSpeed = 2f;
+    public KeyCode interactKey = KeyCode.F;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [Header("UI (optional)")]
+    public GameObject promptUI;
+
+    private bool playerInRange = false;
+    private bool isOpen = false;
+    private Quaternion closedRotation;
+    private Quaternion openRotation;
+
     void Start()
     {
-        Debug.Log("Start Game");
+        closedRotation = doorPivot.localRotation;
+        openRotation = closedRotation * Quaternion.Euler(0, openAngle, 0);
+
+        if (promptUI != null)
+            promptUI.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Debug.Log("Game running");
+        if (playerInRange && Input.GetKeyDown(interactKey))
+        {
+            isOpen = !isOpen;
+        }
+
+        Quaternion target = isOpen ? openRotation : closedRotation;
+        doorPivot.localRotation = Quaternion.Slerp(doorPivot.localRotation, target, Time.deltaTime * openSpeed);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+            if (promptUI != null) promptUI.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+            if (promptUI != null) promptUI.SetActive(false);
+        }
     }
 }
