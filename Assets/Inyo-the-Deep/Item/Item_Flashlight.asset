@@ -16,3 +16,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 0797f07266111804a934a236f4bfebea, type: 3}
   description: 
   isKey: 0
+  isFlashlight: 1
+  isConsumable: 0
+  healAmount: 0

@@ -9,7 +9,10 @@ EditorBuildSettings:
     path: Assets/Inyo-the-Deep/Scene/Main Menu  Scene/Main menu.unity
     guid: f1d4b10ee3ac05d43ab7cb1038cfc921
   - enabled: 1
-    path: Assets/Inyo-the-Deep/Game/openmain.unity
+    path: Assets/Inyo-the-Deep/Scene/Game/Edit main game.unity
     guid: 58debae8b1f15204e98be8170fec1129
+  - enabled: 1
+    path: Assets/Inyo-the-Deep/Scene/Room_1/Room_1.unity
+    guid: 100eeb45b64570041bd212f4026e5a6f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
