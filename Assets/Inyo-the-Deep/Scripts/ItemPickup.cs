@@ -2,41 +2,43 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    public ItemData item;
-    public GameObject promptUI;
+    public ItemData item;           // ลาก ScriptableObject มาใส่ตรงนี้ใน Inspector
+    public GameObject promptUI;     // ข้อความ "กด E เพื่อเก็บ"
+    public GameObject pickupEffect; // เอฟเฟกต์ตอนเก็บ (Optional)
 
     private bool playerInRange = false;
 
     void Start()
     {
         if (promptUI != null)
-        {
             promptUI.SetActive(false);
-        }
     }
 
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            InventoryManager.Instance.AddItem(item);
+            bool success = InventoryManager.Instance.AddItem(item);
 
-            // ถ้าไอเทมนี้เป็นไฟฉาย ให้สั่งเปิดใช้งานทันที
-            if (item.isFlashlight)
+            if (success)
             {
-                PlayerFlashlight flashlight = FindAnyObjectByType<PlayerFlashlight>();
-                if (flashlight != null)
+                // ถ้าเป็นไฟฉาย ให้เปิดใช้งานทันที
+                if (item.isFlashlight)
                 {
-                    flashlight.GetFlashlight();
+                    PlayerFlashlight flashlight = FindAnyObjectByType<PlayerFlashlight>();
+                    if (flashlight != null)
+                        flashlight.GetFlashlight();
                 }
-            }
 
-            if (promptUI != null)
-            {
-                promptUI.SetActive(false);
-            }
+                // เอฟเฟกต์ (ถ้ามี)
+                if (pickupEffect != null)
+                    Instantiate(pickupEffect, transform.position, Quaternion.identity);
 
-            Destroy(gameObject);
+                if (promptUI != null)
+                    promptUI.SetActive(false);
+
+                Destroy(gameObject); // ลบไอเทมออกจากฉาก
+            }
         }
     }
 
@@ -45,7 +47,8 @@ public class ItemPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            if (promptUI != null) promptUI.SetActive(true);
+            if (promptUI != null)
+                promptUI.SetActive(true);
         }
     }
 
@@ -54,7 +57,8 @@ public class ItemPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            if (promptUI != null) promptUI.SetActive(false);
+            if (promptUI != null)
+                promptUI.SetActive(false);
         }
     }
 }
